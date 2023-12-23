@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<main id="main">
+
+    <!-- ======= Intro Single ======= -->
+    <section class="intro-single">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 col-lg-8">
+                    <div class="title-single-box">
+                        <h1 class="title-single">Наши удивительные квартиры</h1>
+                        <span class="color-text-a">Список квартир</span>
+                    </div>
+                </div>
+                <div class="col-md-12 col-lg-4">
+                    <nav aria-label="breadcrumb" class="breadcrumb-box d-flex justify-content-lg-end">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="/">Домой</a>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">
+                                Список квартир
+                            </li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section><!-- End Intro Single-->
+
+    <!-- ======= Property Grid ======= -->
+    <section class="property-grid grid">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="grid-option">
+
+                        <nav class="pagination-a">
+                            <ul class="pagination justify-content-end">
+                                <li class="page-item {% if category == 'all' %} active {% endif %}">
+                                    <a class="page-link" href="{% url 'apartments:category' 'all' %}">Все</a>
+                                </li>
+
+                                <li class="page-item {% if category == 'for_sale' %} active {% endif %}">
+                                    <a class="page-link" href="{% url 'apartments:category' 'for_sale' %}">На
+                                        продаже</a>
+                                </li>
+
+                                <li class="page-item {% if category == 'sales' %} active {% endif %}">
+                                    <a class="page-link" href="{% url 'apartments:category' 'sales' %}">Продано</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+                {% for apart in page_obj %}
+
+                <div class="col-12 col-md-6 pb-4">
+                    <div class="property-card">
+
+                        <figure class="card-banner">
+
+                            <a href="{% url 'apartments:single_apartment' apart.id %}">
+                                <img src="{{ apart.first_image.image.url }}" alt="New Apartment Nice View"
+                                     class="w-100">
+                            </a>
+                            {% if apart.status == 'for_sale' %}
+                            <div class="card-badge green">на продажу</div>
+
+                            {% else %}
+                            <div class="card-badge orange">продано</div>
+
+                            {% endif %}
+
+                            <div class="banner-actions">
+
+                                <a href="#" class="banner-actions-btn">
+                                    <p class="intro-title-top"><i class="bi bi-geo-alt-fill"></i> {{apart.address}}</p>
+                                </a>
+
+                            </div>
+
+                        </figure>
+
+                        <div class="card-content">
+
+                            <div class="card-price">
+                                <strong>₽ {{apart.price}}</strong>
+                            </div>
+
+                            <h3 class="h3 card-title">
+                                <strong>{{apart.title}}</strong>
+                            </h3>
+
+                            <p class="card-text">
+                                {{apart.anons}}
+                            </p>
+                            <div class="card-list">
+                                <div class="card-item">
+                                    <span>Площадь: </span>
+                                    <span>{{apart.square_ft}} кв.м</span>
+                                </div>
+                                <div class="card-item">
+                                    <span>Комнаты: </span>
+                                    <span>{{apart.bedrooms}}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                {% endfor %}
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <nav class="pagination-a">
+                        <ul class="pagination justify-content-end">
+                            {% for p in page_obj.paginator.page_range %}
+                            {% if page_obj.number == p %}
+                            <li class="page-item active">
+                                <span class="page-link">{{p}}</span>
+                            </li>
+                            {% else %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{p}}">{{p}}</a>
+                            </li>
+                            {% endif %}
+
+                            {% endfor %}
+
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section><!-- End Property Grid Single-->
+
+</main><!-- End #main -->
+
+
+{% endblock %}

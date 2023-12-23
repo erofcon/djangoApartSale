@@ -1,0 +1,4 @@
+venv
+.idea
+
+apart_sale/db.sqlite3
