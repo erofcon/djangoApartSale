@@ -9,3 +9,4 @@ urlpatterns = [
     path('/<str:category_id>/', views.apartments, name='category'),
     path('/<int:apartment_id>', views.single_apartment, name='single_apartment')
 ]
+

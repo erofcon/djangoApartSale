@@ -33,4 +33,6 @@ def single_apartment(request, apartment_id=0):
             'apartment': apartment,
         }
 
+        # print(apartment.lon)
+
         return render(request, 'single_apartment.html', context=data)
